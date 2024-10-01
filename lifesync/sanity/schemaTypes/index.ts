@@ -5,5 +5,15 @@ import {post} from './post'
 import {project} from './project'
 import {timeline} from './timeline'
 import {library} from './library'
+import {calendar} from './calendar'
 
-export const schemaTypes = [blockContent, duration, milestone, post, project, timeline, library]
+export const schemaTypes = [
+  blockContent,
+  duration,
+  milestone,
+  post,
+  project,
+  timeline,
+  library,
+  calendar,
+]
