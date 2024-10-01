@@ -12,6 +12,11 @@ export const library = defineType({
       default: false,
     }),
     defineField({
+      name: 'yearRead',
+      title: 'Hvornår er bogen læst?',
+      type: 'number'
+    }),
+    defineField({
       name: 'title',
       description: 'Bogens titel',
       title: 'Title',

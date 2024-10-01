@@ -9,7 +9,7 @@ import { Badge } from "../ui/badge";
 import Image from "next/image";
 import Link from "next/link";
 import { getVideos } from "@/app/api/getVideos";
-import { getBooks } from "@/app/api/getBooks";
+import { getBooks } from "@/app/lifesync/library/api/getBooks";
 import { getDates } from "@/app/api/getDates";
 import { getMovies } from "@/app/api/auth/route";
 import { cookies } from "next/headers";
@@ -48,14 +48,14 @@ export default async function Media() {
 
            
             <TabsContent value="trakt">
-              <Card className="md:min-h-[570px]" x-chunk="dashboard-06-chunk-0">
+              <Card className="md:min-h-[470px]" x-chunk="dashboard-06-chunk-0">
                 <CardHeader>
                   <CardTitle>Trakt</CardTitle>
                   <CardDescription>
                     Watch list. <Badge> <Link target="_blank" href='https://trakt.tv/users/kastholm95/watchlist?sort=rank,asc'>Edit</Link> </Badge>
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="max-h-[470px] overflow-y-scroll" >
+                <CardContent className="max-h-[370px] overflow-y-scroll" >
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -110,7 +110,7 @@ export default async function Media() {
                     Need to read books
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="max-h-[470px] overflow-y-scroll" >
+                <CardContent className="max-h-[370px] overflow-y-scroll" >
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -167,7 +167,7 @@ export default async function Media() {
                     Wathc later videos. <Badge> <Link target="_blank" href='https://www.youtube.com/playlist?list=PLAKDE8PiTIRlGHK3mombeOi8YFf19SwZz'>Edit</Link> </Badge>
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="max-h-[470px] overflow-y-scroll" >
+                <CardContent className="max-h-[370px] overflow-y-scroll" >
                   <Table>
                     <TableHeader>
                       <TableRow>

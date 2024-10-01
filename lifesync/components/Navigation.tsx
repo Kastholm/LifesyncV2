@@ -5,32 +5,32 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 
+export const navItems = [
+  {
+    name: "Dashboard",
+    icon: <House className="h-4 w-4" />,
+    link: "/",
+  },
+  {
+    name: "Library",
+    icon: <House className="h-4 w-4" />,
+    link: "/lifesync/library",
+  },
+  {
+    name: "Trakt",
+    icon: <House className="h-4 w-4" />,
+    link: "/lifesync/trakt",
+  },
+  {
+    name: "Calendar",
+    icon: <House className="h-4 w-4" />,
+    link: "/lifesync/calendar",
+  },
+];
 export default function Navigation() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const navItems = [
-    {
-      name: "Dashboard",
-      icon: <House className="h-4 w-4" />,
-      link: "/",
-    },
-    {
-      name: "Library",
-      icon: <House className="h-4 w-4" />,
-      link: "/lifesync/library",
-    },
-    {
-      name: "Trakt",
-      icon: <House className="h-4 w-4" />,
-      link: "/lifesync/trakt",
-    },
-    {
-      name: "Calendar",
-      icon: <House className="h-4 w-4" />,
-      link: "/lifesync/calendar",
-    },
-  ];
 
   useEffect(() => {
     const url = `${pathname}?${searchParams}`;

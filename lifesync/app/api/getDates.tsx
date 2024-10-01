@@ -25,6 +25,8 @@ export async function getDates() {
   );
   const data = await res.json();
 
+  console.log(data)
+
   const combinedData = data.concat(jsonDates);
 
   const getThisMonthDates = combinedData.reduce((current, date) => {

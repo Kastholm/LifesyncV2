@@ -14,7 +14,10 @@ export default async function Home() {
         </div>
         <YouTube />
       </div>
-      <Dates />
+        <Dates />
+      {/* <div className="rounded-xl ">
+        <iframe className="w-full h-[40em] rounded-xl" src="http://homeassistant.local:8123/lovelace-shroom/app" />
+      </div> */}
     </section>
   );
 }
