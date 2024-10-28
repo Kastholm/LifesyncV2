@@ -10,7 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getVideos } from "@/app/api/getVideos";
 import { getBooks } from "@/app/lifesync/library/api/getBooks";
-import { getDates } from "@/app/api/getDates";
+import { getDates } from "@/app/lifesync/calendar/api/getDates";
 import { getMovies } from "@/app/api/auth/route";
 import { cookies } from "next/headers";
 import { urlFor } from "@/lib/client";

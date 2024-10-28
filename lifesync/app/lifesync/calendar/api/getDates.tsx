@@ -1,14 +1,15 @@
 import React from "react";
-import jsonDates from "../../lib/dates.json";
+
 
 import { client } from "@/lib/client";
+import jsonDates from "@/app/lifesync/calendar/lib/dates.json";
 
 export async function getSanityDates() {
   const query = `*[_type == "calendar"] {
           _id,
-          eventName,
-          eventType,
-          eventDate
+          localName,
+          type,
+          date
         }`;
 
   const data = await client.fetch(query);
@@ -19,15 +20,16 @@ export async function getDates() {
   const year = new Date().getFullYear();
   const month = new Date().getMonth();
 
+  const sanityDates = await getSanityDates();
+
   const res = await fetch(
     `https://date.nager.at/api/v3/publicholidays/${year}/DK
         `
   );
   const data = await res.json();
 
-  console.log(data)
 
-  const combinedData = data.concat(jsonDates);
+  const combinedData = data.concat(jsonDates, sanityDates);
 
   const getThisMonthDates = combinedData.reduce((current, date) => {
     if (new Date(date.date).getMonth() + 1 == month + 1) {
@@ -40,6 +42,7 @@ export async function getDates() {
     (firstItem, secondItem) =>
       new Date(firstItem.date).getDate() - new Date(secondItem.date).getDate()
   );
+  console.log(combinedData);
   return getThisMonthDates;
 }
 

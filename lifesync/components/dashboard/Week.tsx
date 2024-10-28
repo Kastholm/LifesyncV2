@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card'
-import { getWeekNumber } from '@/app/api/getDates'
+import { getWeekNumber } from '@/app/lifesync/calendar/api/getDates'
 export default function Week() {
   return (
      <Card

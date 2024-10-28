@@ -7,13 +7,13 @@ export const calendar = defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'eventName',
+      name: 'localName',
       description: 'Begivenheds navn',
       title: 'Title',
       type: 'string',
     }),
     defineField({
-      name: 'eventType',
+      name: 'type',
       title: 'Begivenheds type',
       type: 'string', // Ændret til 'string' for at lave en dropdown
       options: {
@@ -25,7 +25,7 @@ export const calendar = defineType({
       },
     }),
     defineField({
-      name: 'eventDate',
+      name: 'date',
       title: 'Begivenheds dato',
       type: 'date', // Eller 'date' hvis du kun vil have dato uden tid
       options: {

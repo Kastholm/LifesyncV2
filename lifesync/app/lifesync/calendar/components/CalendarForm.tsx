@@ -5,6 +5,8 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import ReactDOM from 'react-dom';
+import Modal from 'react-modal';
 
 import { cn } from "@/lib/utils";
 
@@ -46,98 +48,164 @@ const FormSchema = z.object({
   }),
 });
 
-export function CalendarForm({ onSubmit }) {
+
+export function CalendarForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
+  const router = useRouter();
 
   const [eventType, setEventType] = useState("aftale");
   const [eventName, setEventName] = useState("");
   const [eventDate, setEventDate] = useState(null);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+
+    console.log(eventDate)
     const data = {
       name: eventName,
-      date: eventDate,
+      date:  `${eventDate.getFullYear()}-${String(eventDate.getMonth() + 1).padStart(2, '0')}-${String(eventDate.getDate()).padStart(2, '0')}`,
       type: eventType,
     };
+    console.log(data);
 
-    onSubmit(data);
+    try {
+      const res = await fetch(
+        `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v1/data/mutate/production`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_SANITY_TOKEN}`
+          },
+          body: JSON.stringify({
+            mutations: [
+              {
+                create: {
+                  _type: 'calendar',
+                  localName: data.name,
+                  type: data.type,
+                  date: data.date
+                }
+              }
+            ]
+          })
+        }
+      )
+      const datata = await res.json();
+      console.log('doc c', datata)
+    }catch (error) {
+      console.error('error', error);
+    }
+    closeModal();
   };
 
-  return (
-    <Form {...form}>
-      <div className="space-y-8">
-        <FormField
-          control={form.control}
-          name="dob"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Begivenhed</FormLabel>
-              <Input
-                onChange={(e) => setEventName(e.target.value)}
-                className="w-60"
-                type="text"
-                placeholder="Navn"
-              />
-              <FormLabel>Dato</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Vælg dato</span>
-                      )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={(date) => {
-                      field.onChange(date); // Update form field
-                      setEventDate(date); // Set the event date in state
-                    }}
-                    disabled={(date) =>
-                      date > new Date() || date < new Date("1900-01-01")
-                    }
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
+  Modal.setAppElement(document.getElementById('root'));
 
-              <FormLabel>Type Begivenhed</FormLabel>
-              <Select onValueChange={(value) => setEventType(value)}>
-                <SelectTrigger className="w-60">
-                  <SelectValue placeholder="Vælg begivenhed" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Type Begivenhed</SelectLabel>
-                    <SelectItem value="aftale">Aftale</SelectItem>
-                    <SelectItem value="fødselsdag">Fødselsdag</SelectItem>
-                    <SelectItem value="ferie">Ferie</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-              <Button type="submit">Submit</Button>
-            </FormItem>
-          )}
-        />
-        <div onClick={() => handleSubmit()}>Submittt</div>
-      </div>
-    </Form>
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+
+
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  return (
+    <aside>
+      <Button onClick={openModal}>Open Modal</Button>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+      <Form {...form}>
+        <div className="space-y-8 p-4">
+          <FormField
+            control={form.control}
+            name="dob"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Begivenhed</FormLabel>
+                <Input
+                  onChange={(e) => setEventName(e.target.value)}
+                  className="w-60"
+                  type="text"
+                  placeholder="Navn"
+                />
+                <FormLabel>Dato</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-[240px] pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value ? (
+                          format(field.value, "PPP")
+                        ) : (
+                          <span>Vælg dato</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={(date) => {
+                        field.onChange(date); // Update form field
+                        setEventDate(date); // Set the event date in state
+                      }}
+                      disabled={(date) =>
+                        date < new Date("1900-01-01")
+                      }
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+  
+                <FormLabel>Type Begivenhed</FormLabel>
+                <Select onValueChange={(value) => setEventType(value)}>
+                  <SelectTrigger className="w-60">
+                    <SelectValue placeholder="Vælg begivenhed" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Type Begivenhed</SelectLabel>
+                      <SelectItem value="aftale">Aftale</SelectItem>
+                      <SelectItem value="fødselsdag">Fødselsdag</SelectItem>
+                      <SelectItem value="ferie">Ferie</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button onClick={() => handleSubmit()}>Submit</Button>
+        </div>
+      </Form>
+      </Modal>
+    </aside>
   );
 }
 

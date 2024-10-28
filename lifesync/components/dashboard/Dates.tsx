@@ -5,7 +5,7 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
-import { getDates } from '@/app/api/getDates';
+import { getDates } from '@/app/lifesync/calendar/api/getDates';
 
 export default async function Dates() {
 
