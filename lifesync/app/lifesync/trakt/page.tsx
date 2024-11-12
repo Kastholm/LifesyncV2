@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
-import { getWatchedMovies, setCode } from "@/app/api/auth/route";
-import { getMovies } from "@/app/api/auth/route";
+import { getWatchedMovies, setCode } from "@/app/lifesync/trakt/api/auth/route";
+import { getMovies } from "@/app/lifesync/trakt/api/auth/route";
 import Image from "next/image";
 import {
   Carousel,
@@ -14,11 +14,9 @@ import { Badge } from "@/components/ui/badge";
 
 export default async function Page({ searchParams }) {
   const code = searchParams.code;
-  const traktClientId =
-    "f07014fc66a30fe9307563589bebeae8b298cd556284f9b39631157e166664b9";
-  const traktClientSecret =
-    "958a9430b2a19014e607f80ed246070686cb54d0b6b5903480f6b2c7ed6af56c";
-  const redirectUri = "http://localhost:3000/lifesync/trakt";
+  const traktClientId = process.env.NEXT_PUBLIC_TRAKT_CLIENT_ID
+  const traktClientSecret = process.env.NEXT_PUBLIC_TRAKT_CLIENT_SECRET
+  const redirectUri = process.env.NEXT_PUBLIC_TRAKT_REDIRECT_URI;
 
   const movies = await getMovies();
 

@@ -27,7 +27,7 @@ const dates = await getDates();
   return (
     
       <div className="bg-white md:py-8 px-4 lg:max-w-7xl lg:mx-auto lg:px-8">
-         
+         <CalendarForm />
     <aside className="flex gap-4"><p className="text-4xl font-bold text-gray-800 mb-8">{month} {year}</p></aside>
     <div className="inline-flex flex-col space-y-1 items-start justify-start h-full w-full">
     <div className="inline-flex space-x-28 items-start justify-start pr-24 h-full w-full">
@@ -65,9 +65,7 @@ const dates = await getDates();
                       const day = date.date.split('-')[2]; // Split datoen og hent dagen (det tredje element)
                       return <h1>
                         {
-                          Number(day) === index ? (
-                          <p className={`text-sm px-2 py-1 rounded-lg w-full ${date.type}`}>{date.localName}</p>
-                        ) : null
+                          Number(day) === index && <p className={`text-sm px-2 py-1 rounded-lg w-full ${date.type}`}>{date.localName}</p> 
                         }
                         </h1>;
                     })
@@ -76,32 +74,8 @@ const dates = await getDates();
             </div>
             ))
           }
-
          
          
-
-
-           {/*  <div className="flex items-start justify-start w-40 h-full pl-2 pr-32 pt-2.5 pb-24 border border-gray-200">
-                <p className="opacity-50 text-sm font-medium text-gray-800">01</p>
-            </div>
-            <div className="flex items-start justify-start w-40 h-full pl-2 pr-32 pt-2.5 pb-24 border border-gray-200">
-                <p className="opacity-50 text-sm font-medium text-gray-800">02</p>
-            </div>
-            <div className="flex items-start justify-start w-40 h-full pl-2 pr-32 pt-2.5 pb-24 border border-gray-200">
-                <p className="opacity-50 text-sm font-medium text-gray-800">03</p>
-            </div>
-            <div className="flex items-start justify-start w-40 h-full pl-2 pr-32 pt-2.5 pb-24 border border-gray-200">
-                <p className="opacity-50 text-sm font-medium text-gray-800">04</p>
-            </div>
-            <div className="flex items-start justify-start w-40 h-full pl-2 pr-32 pt-2.5 pb-24 border border-gray-200">
-                <p className="opacity-50 text-sm font-medium text-gray-800">05</p>
-            </div>
-            <div className="flex items-start justify-start w-40 h-full pl-2 pr-32 pt-2.5 pb-24 border border-gray-200">
-                <p className="opacity-50 text-sm font-medium text-gray-800">06</p>
-            </div>
-            <div className="flex items-start justify-start w-40 h-full pl-2 pr-32 pt-2.5 pb-24 border border-gray-200">
-                <p className="opacity-50 text-sm font-medium text-gray-800">07</p>
-            </div> */}
     </div>
 </div>
 </div>

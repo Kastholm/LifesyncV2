@@ -192,7 +192,7 @@ export function CalendarForm() {
                     <SelectGroup>
                       <SelectLabel>Type Begivenhed</SelectLabel>
                       <SelectItem value="aftale">Aftale</SelectItem>
-                      <SelectItem value="fødselsdag">Fødselsdag</SelectItem>
+                      <SelectItem value="birthday">Fødselsdag</SelectItem>
                       <SelectItem value="ferie">Ferie</SelectItem>
                     </SelectGroup>
                   </SelectContent>

@@ -10,6 +10,8 @@ import { getDates } from '@/app/lifesync/calendar/api/getDates';
 export default async function Dates() {
 
      const dates = await getDates();
+     const today = new Date();
+     const compDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDay() + 1}`
   return (
      <Tabs>
      <Card x-chunk="dashboard-05-chunk-3">
@@ -49,7 +51,7 @@ export default async function Dates() {
                </TableCell>
                <TableCell className="hidden sm:table-cell">
                  {
-                 date.type ? ( <Badge className="text-xs" variant="default">
+                 date.type ? ( <Badge className="text-xs capitalize" variant="default">
                  {date.type}
                </Badge>) : (<Badge className="text-xs" variant="outline">
                {date.types[0]}
@@ -57,9 +59,19 @@ export default async function Dates() {
                  }
                </TableCell>
                <TableCell className="hidden sm:table-cell">
-                 <Badge className="text-xs" variant="secondary">
-                   Fulfilled
-                 </Badge>
+                  {
+                    new Date(date.date) > new Date() ? 
+                    (
+                      <Badge className="text-xs" variant="destructive">
+                      {Math.floor((new Date(date.date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))} dage
+                    </Badge>
+                    ) : (
+                      <Badge className="text-xs" variant="secondary">
+                        Passeret
+                  </Badge>
+                    )
+                  }
+                 
                </TableCell>
                <TableCell className="hidden md:table-cell">
                {date.date}

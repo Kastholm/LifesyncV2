@@ -8,10 +8,10 @@ import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
 import Link from "next/link";
-import { getVideos } from "@/app/api/getVideos";
+import { getVideos } from "@/app/lifesync/trakt/api/getVideos";
 import { getBooks } from "@/app/lifesync/library/api/getBooks";
 import { getDates } from "@/app/lifesync/calendar/api/getDates";
-import { getMovies } from "@/app/api/auth/route";
+import { getMovies } from "@/app/lifesync/trakt/api/auth/route";
 import { cookies } from "next/headers";
 import { urlFor } from "@/lib/client";
 

@@ -18,36 +18,66 @@ export default async function Library() {
     return groupedBooks;
   }, {});
 
-  console.log(Object.entries(groupBooks).sort((a, b) => Number(b[0]) - Number(a[0])));
   return (
     <section>
+      <aside>
+              <span className="two mt-8 ml-1">
+                <h1>
+                  <span>Læselisten</span>
+                </h1>
+              </span>
+            <ul>
+              {books.map((book: BookModel) => (
+                book && book.hasRead === false && (
+                <Link href={`/lifesync/library/book/${book.slug}`}>
+                  <li key={book._id} className="book">
+                    <Image
+                      className=" object-contain"
+                      alt={book.title}
+                      src={urlFor(book.image)
+                        .format("webp")
+                        .fit("fill")
+                        .quality(85)
+                        .url()}
+                      height={600}
+                      width={300}
+                    />
+                  </li>
+                </Link>
+                )
+              ))}
+            </ul>
+          </aside>
       {Object.entries(groupBooks).sort((a, b) => Number(b[0]) - Number(a[0])).map(([year, books]) => (
-        <aside>
-            <span className="two mt-8 ml-1">
-              <h1>
-                <span>{year}</span>
-              </h1>
-            </span>
-          <ul>
-            {books.map((book: BookModel) => (
-              <Link href={`/lifesync/library/book/${book.slug}`}>
-                <li key={book._id} className="book">
-                  <Image
-                    className=" object-contain"
-                    alt={book.title}
-                    src={urlFor(book.image)
-                      .format("webp")
-                      .fit("fill")
-                      .quality(85)
-                      .url()}
-                    height={600}
-                    width={300}
-                  />
-                </li>
-              </Link>
-            ))}
-          </ul>
-        </aside>
+        
+          <aside>
+              <span className="two mt-8 ml-1">
+                <h1>
+                  <span>{year}</span>
+                </h1>
+              </span>
+            <ul>
+              {books.map((book: BookModel) => (
+                book.hasRead && (
+                <Link href={`/lifesync/library/book/${book.slug}`}>
+                  <li key={book._id} className="book">
+                    <Image
+                      className=" object-contain"
+                      alt={book.title}
+                      src={urlFor(book.image)
+                        .format("webp")
+                        .fit("fill")
+                        .quality(85)
+                        .url()}
+                      height={600}
+                      width={300}
+                    />
+                  </li>
+                </Link>
+                )
+              ))}
+            </ul>
+          </aside>
       ))}
     </section>
   );
